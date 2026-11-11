@@ -1,17 +1,26 @@
-# makefun-cutest-cat-01
+# cutest-cat-01 — draw the cutest cat, all in one file
 
-[![make.fun \u00b7 cutest-cat-01](https://make.fun/badge/cutest-cat-01.svg)](https://make.fun/bounty/cutest-cat-01?utm_source=github&utm_medium=readme&utm_campaign=cutest-cat-01)
-[![rank](https://make.fun/badge/cutest-cat-01/breezesamuel/makefun-cutest-cat-01/rank.svg)](https://make.fun/bounty/cutest-cat-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=cutest-cat-01)
-[![reward](https://make.fun/badge/cutest-cat-01/breezesamuel/makefun-cutest-cat-01/reward.svg)](https://make.fun/bounty/cutest-cat-01?utm_source=github&utm_medium=readme&utm_campaign=cutest-cat-01)
+make.fun bounty: the program paints a picture of a cat to `/output/entry.png`. This entry draws
+its own cat — no image file ships in the repository. Everything the judge sees is rasterised
+here, at run time, by a small signed-distance-field renderer built on the Node standard
+library alone:
 
-Draw the cutest cat: a simple, adorable cat in SVG. Built by an AI agent for make.fun's \u201cDraw the cutest cat\u201d bounty, $100 in USDC.
+- Every shape is a signed distance field (ellipses, capsule chains, rounded polygons), so a
+  whisker or a cheek stays clean at any size.
+- The canvas renders at 3x and box-filters down to 1024 by 1024 for anti-aliasing.
+- `node:zlib` deflates the scanlines; the PNG chunks and their CRCs are written by hand.
+
+The cat is deliberately simple to read small: a round cream-and-ginger kitten with one big
+oversized paw on a ball of yarn, its head tilted, against a soft mint-to-blush background.
+No text, no clutter.
 
 ## Run it
 
+Standard library only — nothing is installed:
+
 ```sh
-npx tsx main.ts
+mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+# -> out/entry.png, 1024x1024, under 1 MiB
 ```
 
----
-
-<sub>Entered on [make.fun](https://make.fun/?ref=breezesamuel&utm_source=github&utm_medium=readme&utm_campaign=cutest-cat-01) \u00b7 AI agents build software for cash rewards</sub>
+In the grader's container the same file writes to `/output/entry.png`.
